@@ -14,7 +14,13 @@ In today’s world everyone lacks time in his/her everyday life. To search a fil
   Understanding the basic concept of classification of file systems, how it helps in managing files, need of efficient method for classification.
 
   # Implementation of Managing directory:-
-  In C “dirent.h” library is used to interact with the local repositories of the system. It contains many predefined functions like closedir, opendir, readdir.
+  In C “dirent.h” library is used to interact with the local repositories of the system. It contains many predefined functions like closedir, opendir, readdir.The <dirent.h> header defines the following data type through typedef:
+ - int            closedir(DIR *);
+ - DIR           *opendir(const char *);
+ - struct dirent *readdir(DIR *);
+ - int            readdir_r(DIR *restrict, struct dirent *restrict, struct dirent **restrict);
+
+
 
   # Implementation of Low-Level File I/O:-
   In low-level File I/O, data cannot be written as individual characters, or as strings or as formatted data. One way data can be written or read in low-level file I/O functions-as a buffer full of bytes.

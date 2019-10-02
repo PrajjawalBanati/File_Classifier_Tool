@@ -8,6 +8,8 @@ char path[100];
 char c[100][100],d[100][100];
 //Reference variable to store the extension
 char *getext=NULL;
+//Function which return the extension of the file
+char* getextension(struct dirent *dir);
 //Following function will be opening the files present in the directory
 void direct(char path[]);
 int main(void)
@@ -21,12 +23,13 @@ void direct(char path[])
 {
 //DIR is a typedef defined as a directory stream
 DIR *d;
+int i=0;
 struct dirent *dir;
-//Open the directory 
+//Open the directory
 d=opendir(path);
 if(d)
 {
-while((dir=readdir(d))!=NULL)
+while((dir=readdir(d))!= NULL)
 {
 printf("%s\n",dir->d_name);
 getext=getextension(dir);

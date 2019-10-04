@@ -11,15 +11,19 @@ char *getext=NULL;
 //Function which return the extension of the file
 char* getextension(struct dirent *dir);
 //Following function will be opening the files present in the directory
-void direct(char path[]);
+int direct(char path[]);
+//Following function will fetch the unique extensions from the array
+int getuniqueextension(int m)
 int main(void)
 {
+int m,k;
 printf("File Manager\n");
 printf("Enter the path of the directory:");
 scanf("%s", path);
-direct(path);
+m=direct(path);
+k=getuniqueextension(m);
 }
-void direct(char path[])
+int direct(char path[])
 {
 //DIR is a typedef defined as a directory stream
 DIR *d;
@@ -49,6 +53,7 @@ i++;
 //After the loop is ended directory is closed
 closedir(d);
 }
+return i;
 }
 char* getextension(struct dirent *dir)
 {
@@ -65,4 +70,25 @@ else
 //returns the string
 return ext;
 }
+}
+//Will get the number of unique extensions present in the directory
+int getuniqueextension(int m)
+{
+int i,j,k=0;
+for(i=0;i<m;i++)
+{
+for(j=0;j<i;j++)
+{
+if(strcmpi(c[i],c[j])==0)
+{
+break;
+}
+}
+if(i==j)
+{
+strcpy(d[k],c[i]);
+k++;
+}
+}
+return k;
 }

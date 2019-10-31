@@ -2,6 +2,9 @@
 #include<stdlib.h>
 #include<dirent.h>
 #include<string.h>
+#include<fcntl.h>
+#include<sys/types.h>
+#include<sys/stat.h>
 //To store the path of the directory
 char path[100];
 //To store the extension of all the files
@@ -13,15 +16,33 @@ char* getextension(struct dirent *dir);
 //Following function will be opening the files present in the directory
 int direct(char path[]);
 //Following function will fetch the unique extensions from the array
-int getuniqueextension(int m)
+int getuniqueextension(int m);
+//Copy function
+void copy(char parentpath[],char newpath[],char extension[]);
 int main(void)
 {
-int m,k;
+int m,k,i;
+char passedpath[100];
 printf("File Manager\n");
 printf("Enter the path of the directory:");
 scanf("%s", path);
+strcpy(passedpath,path);
 m=direct(path);
 k=getuniqueextension(m);
+for(i=0;i<k;i++)
+    {
+        //Current Dircetory in which all the separataed files can be stored
+        char p[100]="C:/Users/Prajjawal Banati/Documents/";
+        printf("Making %s folder\n",d[i]);
+        //Making a directory
+        mkdir(strcat(p,d[i]));
+        printf("%s folder created\n",d[i]);
+        //Calling the Copy function to copy the file from one path to another
+        copy(strcat(path,"/"),strcat(p,"/"),d[i]);
+        //Copying the pre-input path given by the user to conserver the value of it.
+        strcpy(path,passedpath);
+
+    }
 }
 int direct(char path[])
 {
@@ -91,4 +112,59 @@ k++;
 }
 }
 return k;
+}
+void copy(char parentpath[],char newpath[],char extension[])
+{
+    DIR *d;
+    char buffer[4096],parentfile[50],newffile[50];
+    struct dirent *dir;
+    int inhnandle,outhandle,bytes;
+    d=opendir(path);
+    printf("%s\n",parentpath);
+    printf("%s\n",newpath);
+    strcpy(parentfile,parentpath);
+    strcpy(newffile,newpath);
+
+    if(d)
+    {
+        while((dir=readdir(d))!=NULL)
+        {
+            if(!strcmpi(extension,getextension(dir)))
+            {
+                inhnandle=open(strcat(parentpath,dir->d_name),O_RDONLY | O_BINARY);
+                if(inhnandle==-1)
+                {
+                    puts("Cannot open file\n");
+                    exit(1);
+                }
+                outhandle=open(strcat(newpath,dir->d_name),O_CREAT | O_BINARY | O_WRONLY,S_IWRITE);
+                if(outhandle==-1)
+                {
+                    printf("Cannot open file");
+                    close(inhnandle);
+                    exit(2);
+                }
+                printf("Copying file %s\n",dir->d_name);
+                while(1)
+                {
+                    bytes=read(inhnandle,buffer,4096);
+                    if(bytes>0)
+                    {
+                        write(outhandle,buffer,bytes);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                close(inhnandle);
+                close(outhandle);
+                remove(parentpath);
+                strcpy(parentpath,parentfile);
+                strcpy(newpath,newffile);
+
+            }
+        }
+    }
+    closedir(d);
 }

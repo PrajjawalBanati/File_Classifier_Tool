@@ -33,10 +33,8 @@ for(i=0;i<k;i++)
     {
         //Current Dircetory in which all the separataed files can be stored
         char p[100]="C:/Users/Prajjawal Banati/Documents/";
-        printf("Making %s folder\n",d[i]);
         //Making a directory
         mkdir(strcat(p,d[i]));
-        printf("%s folder created\n",d[i]);
         //Calling the Copy function to copy the file from one path to another
         copy(strcat(path,"/"),strcat(p,"/"),d[i]);
         //Copying the pre-input path given by the user to conserver the value of it.
@@ -56,7 +54,6 @@ if(d)
 {
 while((dir=readdir(d))!= NULL)
 {
-printf("%s\n",dir->d_name);
 getext=getextension(dir);
 //if there is only a "." in the file name like in case of folders
 if(!strcmp(getext,"."))
@@ -120,8 +117,6 @@ void copy(char parentpath[],char newpath[],char extension[])
     struct dirent *dir;
     int inhnandle,outhandle,bytes;
     d=opendir(path);
-    printf("%s\n",parentpath);
-    printf("%s\n",newpath);
     strcpy(parentfile,parentpath);
     strcpy(newffile,newpath);
 
@@ -144,7 +139,6 @@ void copy(char parentpath[],char newpath[],char extension[])
                     close(inhnandle);
                     exit(2);
                 }
-                printf("Copying file %s\n",dir->d_name);
                 while(1)
                 {
                     bytes=read(inhnandle,buffer,4096);

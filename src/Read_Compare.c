@@ -19,40 +19,41 @@ void copyfile(char oldpath[],char newpath[]);
 int main(void)
 {
     int i=0,j,m=0,n=9;
-    char newpath[100];
-    char p[100]="C:/Users/Prajjawal Banati/Documents/";
-    char passedp[100],name[30];
+    char name[30];
     printf("Enter the path of the directory:\n(Don't forget to end the path with /)\n");
     scanf("%s",path);
     strcpy(passedpath,path);
-    strcpy(passedp,p);
     m=direct(path);
     int* number=calculate(m,n);
     FILE *fp;
-    fp=fopen("E:/Minor_Project/file_name.txt","r");
+    fp=fopen("E:/SEM V/Minor-I/src/file_name.txt","r");
     while(fscanf(fp,"%s",name)!=EOF)
     {
+        char newpath[100];
          switch(number[i])
          {
-             case 1: printf("This is a Java File.\n");
-             printf("Making Java folder\n");
-             mkdir(strcat(p,"Java/"));
-             copyfile(strcat(path,name),strcat(p,name));
-             strcpy(p,passedp);
+             case 1: //printf("This is a Java File.\n");
+             //printf("Making Java folder\n");
+             strcpy(newpath,path);
+             mkdir(strcat(newpath,"Java/"));
+             copyfile(strcat(path,name),strcat(newpath,name));
+             remove(path);
              strcpy(path,passedpath);
              break;
-             case 2: printf("This is a c file\n");
-             printf("Making C folder\n");
-             mkdir(strcat(p,"C/"));
-             copyfile(strcat(path,name),strcat(p,name));
-             strcpy(p,passedp);
+             case 2: //printf("This is a c file\n");
+             //printf("Making C folder\n");
+             strcpy(newpath,path);
+             mkdir(strcat(newpath,"C/"));
+             copyfile(strcat(path,name),strcat(newpath,name));
+             remove(path);
              strcpy(path,passedpath);
              break;
-             default: printf("This is some another file\n");
-             printf("Making Others folder\n");
-             mkdir(strcat(p,"Others/"));
-             copyfile(strcat(path,name),strcat(p,name));
-             strcpy(p,passedp);
+             default: //printf("This is some another file\n");
+             //printf("Making Others folder\n");
+             strcpy(newpath,path);
+             mkdir(strcat(newpath,"Others/"));
+             copyfile(strcat(path,name),strcat(newpath,name));
+             remove(path);
              strcpy(path,passedpath);
              break;
         }
@@ -69,7 +70,7 @@ int direct(char path[])
     DIR *d;
     int b=0;
     struct dirent *dir;
-    fp=fopen("E:/Minor_Project/file_name.txt","w");
+    fp=fopen("E:/SEM V/Minor-I/src/file_name.txt","w");
     d=opendir(path);
     if(d)
     {
@@ -89,7 +90,7 @@ int direct(char path[])
                     strcpy(name,dir->d_name);
                     fprintf(fp,"%s\n",name);
                     strcat(path,name);
-                    printf("Opening %s\n",path);
+                    //printf("Opening %s\n",path);
                     removeunwantedsymbols(path);
                     strcpy(path,passedpath);
                     free(name);
@@ -107,7 +108,7 @@ void removeunwantedsymbols(char file[])
     FILE *fp,*fp3;
     char ch;
     fp=fopen(file,"r");
-    fp3=fopen("E:/Minor_Project/sample.txt","w");
+    fp3=fopen("E:/SEM V/Minor-I/src/sample.txt","w");
     while((ch=fgetc(fp))!=EOF)
     {
         if(ch=='(' || ch==')')
@@ -117,8 +118,8 @@ void removeunwantedsymbols(char file[])
         putc(ch,fp3);
     }
     fclose(fp3);
-    readfile("E:/Minor_Project/java.txt","E:/Minor_Project/sample.txt");
-    remove("E:/Minor_Project/sample.txt");
+    readfile("E:/SEM V/Minor-I/src/java.txt","E:/SEM V/Minor-I/src/sample.txt");
+    remove("E:/SEM V/Minor-I/src/sample.txt");
 }
 
 void readfile(char file1[],char file2[])

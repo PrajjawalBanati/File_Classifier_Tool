@@ -20,6 +20,7 @@ int main(void)
 {
     int i=0,j,m=0,n=9;
     char name[30];
+    int status;
     printf("Enter the path of the directory:\n(Don't forget to end the path with /)\n");
     scanf("%s",path);
     strcpy(passedpath,path);
@@ -37,7 +38,6 @@ int main(void)
              strcpy(newpath,path);
              mkdir(strcat(newpath,"Java/"));
              copyfile(strcat(path,name),strcat(newpath,name));
-             remove(path);
              strcpy(path,passedpath);
              break;
              case 2: //printf("This is a c file\n");
@@ -45,7 +45,7 @@ int main(void)
              strcpy(newpath,path);
              mkdir(strcat(newpath,"C/"));
              copyfile(strcat(path,name),strcat(newpath,name));
-             remove(path);
+             //remove(path);
              strcpy(path,passedpath);
              break;
              default: //printf("This is some another file\n");
@@ -53,7 +53,7 @@ int main(void)
              strcpy(newpath,path);
              mkdir(strcat(newpath,"Others/"));
              copyfile(strcat(path,name),strcat(newpath,name));
-             remove(path);
+             //remove(path);
              strcpy(path,passedpath);
              break;
         }
@@ -218,14 +218,14 @@ int compare(double javapercent,double cpercent)
 void copyfile(char oldpath[],char newpath[])
 {
     char buffer[4096];
-    int inhnandle,outhandle,bytes;
+    int inhnandle,outhandle,bytes,result;
     inhnandle=open(oldpath,O_RDONLY | O_BINARY);
     if(inhnandle==-1)
     {
         puts("Cannot open file\n");
         exit(1);
     }
-    outhandle=open(newpath,O_CREAT | O_BINARY | O_WRONLY,S_IWRITE);
+    outhandle=open(newpath,O_CREAT | O_BINARY | O_WRONLY);
     if(outhandle==-1)
     {
         printf("Cannot open file");
@@ -246,4 +246,11 @@ void copyfile(char oldpath[],char newpath[])
     }
     close(inhnandle);
     close(outhandle);
+    result=remove(oldpath);
+    if(result==-1)
+    {
+        perror("Error:\n");
+    }
+
 }
+

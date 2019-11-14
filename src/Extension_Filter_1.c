@@ -14,7 +14,7 @@ int direct(char path[]);
 int main(void)
 {
 printf("File Manager\n");
-printf("Enter the path of the directory:");
+printf("Enter the path of the directory:(End the path with /)");
 scanf("%s", path);
 strcpy(passed,path);
 extensionfilter();
@@ -37,7 +37,8 @@ void extensionfilter()
             }
             else
             {
-                char p[100]="C:/Users/Prajjawal Banati/Documents/";
+                char p[100];
+                strcpy(p,path);
                 mkdir(strcat(p,getext));
                 strcat(p,"/");
                 copyfile1(strcat(path,dir->d_name),strcat(p,dir->d_name));

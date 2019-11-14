@@ -15,8 +15,9 @@ int direct(char path[]);
 int main(void)
 {
 printf("File Manager\n");
-printf("Enter the path of the directory:");
+printf("Enter the path of the directory:(End the path with /)");
 scanf("%s", path);
+//To conserve value of path
 strcpy(passed,path);
 extensionfilter();
 }

@@ -7,7 +7,6 @@ minmax.c
 Name.java
 Program.java
 Read_Compare.c
-sample.java
 Solution.java
 string.c
 String_Example.java

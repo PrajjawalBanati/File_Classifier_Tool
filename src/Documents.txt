@@ -1,1 +1,1 @@
-.pdf .pptx .docx .xlsx .mdj
+.pdf .pptx .docx .xlsx .mdj .txt
